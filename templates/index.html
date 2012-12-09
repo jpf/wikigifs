@@ -1,0 +1,97 @@
+<html>
+<head>
+  <title>Every animated GIF on Wikipedia</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<style type="text/css">
+table { height: 100%; width: 100%; }
+#center { align: center; }
+#gif { text-align: center; vertical-align: middle; }
+#title { text-align: center; }
+#title a:link { color: black; text-decoration: none; }
+#title a:hover { color: blue; text-decoration: underline; }
+#title, #footer, #credits { height: 1px; }
+#footer { text-align: center; margin: 0px;}
+#footer ul { margin: 0px; }
+#footer ul li { display: inline; margin: 5px; }
+#title a { font-size: 2em; }
+#gif img { max-width: 800px; max-height: 400px; }
+</style>
+</head>
+<body>
+<table><!-- forgive me Father, for I have sinned -->
+  <tr><td id="title"></td></tr>
+  <tr><td id="center"><div id="gif" onclick="load_random_image();"></div></td></tr>
+  <tr><td id="footer"><ul id="usage"></ul></td>
+  <tr><td id="credits">Created by <a href="http://joel.franusic.com">Joel Franusic</a>.</td>
+</table>
+ <script>
+  window.addEventListener("hashchange", on_hash_change, false);
+   var current_filename = "";
+
+  function filename_only(url) {
+    var rv = url.split(":")[2];
+    rv = rv.replace(/_/g, " ");
+    rv = rv.replace(".gif","");
+    rv = rv.replace(/-/g, " ");
+    rv = decodeURIComponent(rv);
+    return rv;
+  }
+
+  function load_image_by_filename(filename) {
+    current_filename = filename;
+    location.hash = filename;
+
+    var url = 'http://en.wikipedia.org/w/api.php?' +
+              'action=query&prop=imageinfo' +
+              '&format=json&iiprop=url' + 
+              '&list=imageusage&iutitle=File:' +
+    	      filename + 
+	      '&titles=File:' +
+	      filename +
+	      '&callback=?';
+    $.getJSON(url, function(data) {
+      var img_url = data.query.pages['-1'].imageinfo[0].url;
+      var img_description_url = data.query.pages['-1'].imageinfo[0].descriptionurl;
+      var img_name = filename_only(img_description_url);
+      $("#gif").empty().append($("<img/>").attr("src", img_url));
+      $("#title").empty().append($("<a/>").attr("href", img_description_url).append(img_name));
+      $("#usage").empty();
+      if(data.query.imageusage) {
+        $.each(data.query.imageusage, function(index, value) {
+  	  $("#usage").append('<li><a href="http://en.wikipedia.org/wiki/' + value.title + '">' + value.title + '</a></li>');
+        });
+      }
+    });
+  }
+
+  function load_random_image() {
+    $.getJSON("http://bob.fihn.net:5000/pick?callback=?", function(data) {
+      load_image_by_filename(data.image)
+    });
+  }
+
+  function on_hash_change() {
+    var hash_value = location.hash;
+    hash_value = hash_value.replace('#', '');
+
+    if(hash_value !== current_filename) {
+      load_image_by_filename(hash_value);
+    }
+  }
+
+  $(function() {
+    $(document).keyup(function(evt) {
+      if (evt.keyCode == 32) {
+        load_random_image();
+      }
+    })
+  });
+
+  if(location.hash !== "") {
+    on_hash_change();
+  } else {
+    load_random_image();
+  }
+</script> 
+</body>
+</html>
