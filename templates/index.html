@@ -51,7 +51,7 @@ table { height: 100%; width: 100%; }
     current_filename = filename;
     location.hash = filename;
 
-    # http://stackoverflow.com/questions/4811172/is-it-possible-to-track-hash-links-like-pages-with-google-analytics
+    // http://stackoverflow.com/questions/4811172/is-it-possible-to-track-hash-links-like-pages-with-google-analytics
     _gaq.push(['_trackPageview', location.pathname + location.search  + location.hash]);
 
     var url = 'http://en.wikipedia.org/w/api.php?' +
