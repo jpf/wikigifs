@@ -95,7 +95,7 @@ Press [space bar] for new images
   }
 
   function load_random_image() {
-    $.getJSON("http://wikigifs.herokuapp.com/random?callback=?", function(data) {
+    $.getJSON("{{ random_service }}?callback=?", function(data) {
       load_image_by_filename(data.image)
     });
   }
@@ -126,7 +126,7 @@ Press [space bar] for new images
   $('#message').css({'top': ($(window).height() - 200) / 2});
   $('#message').css({'left': ($(window).width() - 400) / 2});
   $('#message').css({'visibility': 'visible'});
-  $('#message').fadeOut(2000);
+  $('#message').fadeOut(3000);
 </script> 
 </body>
 </html>

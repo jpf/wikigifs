@@ -25,7 +25,7 @@ def randompick():
 
 @app.route("/")
 def index():
-    return render_template('index.html', url=url_for('randompick', _external=True))
+    return render_template('index.html', random_service=url_for('randompick', _external=True))
 
 
 if __name__ == "__main__":
