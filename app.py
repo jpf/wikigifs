@@ -14,7 +14,7 @@ def load_data():
 
 
 @app.route("/random")
-def random():
+def randompick():
     callback = request.args.get('callback')
     choice = random.choice(data)
     rv = json.dumps({'image': choice})
