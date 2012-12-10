@@ -95,7 +95,7 @@ Press [space bar] for new images
   }
 
   function load_random_image() {
-    $.getJSON("http://wikigifs.herokuapp.com/random?callback=?", function(data) {
+    $.getJSON("http://bob.fihn.net:5000/pick?callback=?", function(data) {
       load_image_by_filename(data.image)
     });
   }
