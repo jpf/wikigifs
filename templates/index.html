@@ -15,9 +15,26 @@ table { height: 100%; width: 100%; }
 #footer ul li { display: inline; margin: 5px; }
 #title a { font-size: 2em; }
 #gif img { max-width: 800px; max-height: 400px; }
+#message {
+  width: 400px;
+  height: 200px;
+  background-color: black;
+  position: absolute;
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 200px;
+  text-align: center;
+  color: white;
+  opacity:0.8;
+  font-size: 1.5em;
+  border-radius: 15px;
+}
 </style>
 </head>
 <body>
+<div id="message">
+Press [space bar] for new images
+</div>
 <table><!-- forgive me Father, for I have sinned -->
   <tr><td id="title"></td></tr>
   <tr><td id="center"><div id="gif" onclick="load_random_image();"></div></td></tr>
@@ -105,6 +122,11 @@ table { height: 100%; width: 100%; }
   } else {
     load_random_image();
   }
+
+  $('#message').css({'top': ($(window).height() - 200) / 2});
+  $('#message').css({'left': ($(window).width() - 400) / 2});
+  $('#message').css({'visibility': 'visible'});
+  $('#message').fadeOut(2000);
 </script> 
 </body>
 </html>
