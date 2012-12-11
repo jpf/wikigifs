@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Every animated GIF on Wikipedia</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
 <style type="text/css">
 table { height: 100%; width: 100%; }
 #center { align: center; }
@@ -52,7 +52,19 @@ Press [space bar] for new images
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-  window.addEventListener("hashchange", on_hash_change, false);
+  // http://stackoverflow.com/questions/6927637/addeventlistener-in-internet-explorer
+  function addEvent(evnt, elem, func) {
+     if (elem.addEventListener)  // W3C DOM
+        elem.addEventListener(evnt,func,false);
+     else if (elem.attachEvent) { // IE DOM
+        elem.attachEvent("on"+evnt, func);
+     }
+     else { // No much to do
+        elem[evnt] = func;
+     }
+  }
+
+  window.addEvent("hashchange", on_hash_change, false);
   var current_filename = "";
 
   function filename_only(url) {
