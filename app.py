@@ -2,7 +2,8 @@ import os
 import random
 import urllib
 import json
-from flask import Flask, request, Response, url_for, render_template
+from urlparse import urlparse
+from flask import Flask, request, Response, url_for, render_template, redirect
 app = Flask(__name__)
 data = []
 
@@ -25,6 +26,10 @@ def randompick():
 
 @app.route("/")
 def index():
+    request_url = urlparse(request.url)
+    print request_url.netloc
+    if request_url.netloc == 'wikigifs.herokuapp.com':
+        return redirect('http://www.wikigifs.org', 301)
     return render_template('index.html', random_service=url_for('randompick', _external=True))
 
 
