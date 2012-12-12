@@ -4,6 +4,7 @@ import sys
 import csv
 import StringIO
 
+
 class LineReader:
     def __init__(self):
         self.line = ''
@@ -25,6 +26,7 @@ class LineReader:
         else:
             return False
 
+
 def process(row):
     if len(row) < 8:
         return False
@@ -35,9 +37,6 @@ def process(row):
     # print [row[0],row[7],row[8]]
     # print row
     return True
-
-
-
 
 reader = LineReader()
 inside_insert = False
@@ -56,12 +55,11 @@ while True:
         continue
     if not line:
         continue
-    
+
     # strip out '(' at beginning and '),' at end
     string = line[1:-2]
     # print line[1:-2]
     string_array = string.split(',')
     rv = process(string_array)
-    if rv == True:
+    if rv is True:
         print line
-    
