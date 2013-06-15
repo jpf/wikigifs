@@ -52,19 +52,8 @@ Press [space bar] or click image for more
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-  // http://stackoverflow.com/questions/6927637/addeventlistener-in-internet-explorer
-  function addEvent(evnt, elem, func) {
-     if (elem.addEventListener)  // W3C DOM
-        elem.addEventListener(evnt,func,false);
-     else if (elem.attachEvent) { // IE DOM
-        elem.attachEvent("on"+evnt, func);
-     }
-     else { // No much to do
-        elem[evnt] = func;
-     }
-  }
+  $(window).on("hashchange", on_hash_change);
 
-  window.addEvent("hashchange", on_hash_change, false);
   var current_filename = "";
 
   function filename_only(url) {
