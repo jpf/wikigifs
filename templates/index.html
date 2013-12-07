@@ -66,6 +66,8 @@ Press [space bar] or click image for more
   }
 
   function load_image_by_filename(filename) {
+    // http://jehiah.cz/a/guide-to-escape-sequences
+    filename.replace('&', "&amp;").replace('"', "&quot;").replace("'", "&#39;").replace('>', "&gt;").replace('<', "&lt;")
     current_filename = filename;
     location.hash = filename;
 
