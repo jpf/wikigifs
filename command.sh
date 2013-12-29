@@ -4,5 +4,5 @@
 # $ curl -O http://dumps.wikimedia.org/commonswiki/latest/commonswiki-latest-image.sql.gz
 # This takes about 10 minutes
 # $ zcat commonswiki-latest-image.sql.gz | sed -e 's/),/),\n/g' | grep frameCount | python process.py > found-images
-# $ cat found-images | grep -v '.png' | grep -v ' ' | grep -vi masturba | grep -vi scrotum | grep -vi ejaculat > animated-gifs
+# $ cat found-images | grep -v '.png' | grep -v ' ' | grep -v '"' | grep -v "'" | grep -vi masturba | grep -vi scrotum | grep -vi ejaculat > animated-gifs
 cat $0
